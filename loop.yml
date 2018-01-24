@@ -1,0 +1,32 @@
+---
+# observe the loop order!
+# usage of {{...}} in task 2
+# magic vars (pg 116) = inventory_hostname, hostvars, group_names, groups
+- name: loop.yml playbook
+  hosts:
+    - nodes:!172.25.250.13
+  vars:
+    web_appl:
+      - one
+      - two
+      - three
+  tasks:
+    - name: task1
+      debug:
+
+    - name: task2 using constant values
+      debug:
+        msg: "item {{ item }}: this is task2"
+      with_items:
+        - abc
+        - def
+
+    - name: task3 using array
+      debug:
+        msg: "item {{ item }}: this is task3"
+      with_items: "{{ web_appl }}"
+    
+    - name: task4 using magic variables
+      debug:
+        msg: "on host {{ ansible_fqdn }} using value {{ item }}"
+      with_items: "{{ groups['testing'] }}"
