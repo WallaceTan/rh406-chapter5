@@ -7,6 +7,14 @@
         msg: this is {{ inventory_hostname }}
       when: inventory_hostname in groups['testing']
 
+    - name: Hacking servera
+      debug:
+        msg: Only execute for {{ inventory_hostname }}
+# forced fail on this task, skip subsequent tasks for servera
+      failed_when: true
+#      ignore_errors: true
+      when: inventory_hostname == "servera"
+    
     - block:
       - name: task1
         debug:
