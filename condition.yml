@@ -1,0 +1,20 @@
+---
+- name: condition.yml playbook
+  hosts: nodes
+  tasks:
+    - name: only perform on group testing
+      debug:
+        msg: this is {{ inventory_hostname }}
+      when: inventory_hostname in groups['testing']
+
+    - block:
+      - name: task1
+        debug:
+          msg: task1 on {{ inventory_hostname }}
+
+      - name: task2
+        debug:
+          msg: task2 on {{ inventory_hostname }}
+
+# Note the indent position of 'when:', same level as 'block:'
+      when: inventory_hostname in groups['webservers']
