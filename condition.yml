@@ -12,7 +12,9 @@
         msg: Only execute for {{ inventory_hostname }}
 # forced fail on this task, skip subsequent tasks for servera
       failed_when: true
-#      ignore_errors: true
+# ignore error, and continue subsequent tasks for servera
+      ignore_errors: true
+# run this 'Hacking' task when it is servera
       when: inventory_hostname == "servera"
     
     - block:
